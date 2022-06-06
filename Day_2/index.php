@@ -13,7 +13,7 @@ require_once('todo.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    <title>Day 1 - Todo App</title>
+    <title>Day 2 - Todo App</title>
 </head>
 <body>
     <div class="wrapper">

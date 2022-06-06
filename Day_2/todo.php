@@ -1,10 +1,17 @@
 <?php
 
 class Todo {
-    private $id;
-    private $task;
-    private $completed;
+    public $id;
+    public $task;
+    public $completed;
     private $created_at;
+
+    public function __construct($id=NULL) {
+        $this->id = $id;
+        if ( $id != NULL) {
+            $this->get_from_id($id);
+        }
+    }
 
     public function get_from_id($id) {
         global $conn;
@@ -31,29 +38,24 @@ class Todo {
 
         return $todos;
     }
-    
-    public function add_todo($task) {
-        $this->task = $task;
-        $this->completed = false;
-        $this->created_at = date('Y-m-d h:i:sa');
-    }
 
-    public function delete_todo() {
+    public function delete() {
         global $conn;
         if ( isset($this->id)) {
             $q = "DELETE FROM todos WHERE id=$this->id";
             if ( $conn->query($q) === true ) {
                 echo "Deleted Successfully.";
+                header('location: ./index.php');
             } else {
                 die($conn->error);
             }
         }
     }
 
-    public function edit_todo($updated_text) {
+    public function update() {
         global $conn;
         if ( isset($this->id)) {
-            $q = "UPDATE todos SET task='$updated_text' WHERE id='$this->id'";
+            $q = "UPDATE todos SET task='$this->task' WHERE id='$this->id'";
             if ($conn->query($q)) {
                 echo "Updated Successfully";
             } else {
@@ -62,15 +64,28 @@ class Todo {
         }
     }
 
-    public function save_todo() {
+    public function save() {
         global $conn;
         if (isset($this->task)) {
+            $this->completed = false;
+            $this->created_at = date('Y-m-d h:i:sa');
+
             $q = "INSERT INTO todos (task, completed, created_at) VALUES ('$this->task', '$this->completed', '$this->created_at')";
             if ($conn->query($q)) {
                 echo "Added Succcessfully";
             } else {
                 die($conn->error);
             }
+        }
+    }
+
+    public static function delete_all() {
+        global $conn;
+        $q = "DELETE FROM todos WHERE 1";
+        if ($conn->query($q)) {
+            header('location: ./index.php');
+        } else {
+            die($conn->error);
         }
     }
 }
