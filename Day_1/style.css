@@ -1,0 +1,27 @@
+.wrapper {
+    width: 50%;
+    padding: 20px 40px;
+    margin: auto;
+    border: 1px solid;
+}
+
+#app-name {
+    text-align: center;
+    color: red;
+}
+#table-head {
+    font-weight: bold;
+    border-bottom: 3px solid;
+}
+
+.at-label {
+    font-weight: bold;
+}
+
+.at-text {
+    width: 100%;
+}
+
+span.error {
+    color: red;
+}
