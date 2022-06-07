@@ -12,10 +12,18 @@ function am_add_menu_test_email() {
         'Test Email Page',
         'Test Email',
         'manage_options',
-        'am-admin-menu',
+        'am-test-email',
         'am_add_menu_html',
         'dashicons-cart',
         4
+    );
+    add_submenu_page(
+        'am-test-email',
+        'Send Email Page',
+        'Send Email',
+        'manage_options',
+        'am-send-email',
+        'am_send_email_html'
     );
 }
 
@@ -25,6 +33,14 @@ function am_add_menu_html() {
     ?>
     <div class="wrap">
         <p>This is admin menu.</p>
+    </div>
+    <?php
+}
+
+function am_send_email_html() {
+    ?>
+    <div class="wrap">
+        <p>This is sub menu.</p>
     </div>
     <?php
 }
