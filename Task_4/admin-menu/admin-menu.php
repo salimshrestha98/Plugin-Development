@@ -42,8 +42,38 @@ function am_send_email_main() {
         include('includes/send-email.php');
     }
     elseif ( $_SERVER["REQUEST_METHOD"] == "POST") {
-        apply_filters('am_change_email_content_data');
+        $email_contents = array();
+        if ( empty($_POST['subject']) ) {
+            $errors[] = "No Email Subject provided. Please enter valid email subject.";
+        } else {
+            $email_contents['subject'] = trim(htmlspecialchars($_POST['subject']));
+        }
+        
+        if ( empty($_POST['content']) ) {
+            $errors[] = "No Email Content provided. Please enter valid email content.";
+        } else {
+            $email_contents['content'] = trim(htmlspecialchars($_POST['content']));
+        }
+
+        if ( empty($_POST['recipient']) ) {
+            $errors[] = "No Email Recipient provided. Please enter valid email recipient.";
+        } else {
+            $email_contents['recipient'] = trim(htmlspecialchars($_POST['recipient']));
+        }
+
+
+        apply_filters('am_change_email_content_data', $email_contents);
+        add_filter( 'am_change_email_content_data', 'am_change_email_callback', 10, 1 );
+
+        //  Adding custom action hook
+
+        do_action('am_after_email_submit', $email_contents);
+        print_r($email_contents);
     }
+}
+
+function am_change_email_callback($contents) {
+    true;
 }
 
 ?>
