@@ -68,6 +68,7 @@ function am_send_email_main() {
         //  Adding custom action hook
 
         do_action('am_after_email_submit', $email_contents);
+        echo "Updated email contents: <br>";
         print_r($email_contents);
 
     }
@@ -76,12 +77,19 @@ function am_send_email_main() {
 function am_change_email_callback($contents) {
     $contents['subject'] = "This is updated subject";
     $contents['content'] = "This is updated email content";
-    $contents['recipient'] = "updated@recipient.com";
+    $contents['recipient'] = "salimshrestha98@gmail.com";
     
     return $contents;
 }
 
+function am_send_email($email) {
+    wp_mail($email['recipient'], $email['subject'], $email['content']);
+    echo "Email sent. <br>";
+}
+
 add_filter( 'am_change_email_content_data', 'am_change_email_callback', 10, 1 );
+add_action( 'am_after_email_submit', 'am_send_email', 10, 1);
+
 
 ?>
 
