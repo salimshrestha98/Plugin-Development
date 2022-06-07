@@ -23,7 +23,7 @@ function am_add_menu_test_email() {
         'Send Email',
         'manage_options',
         'am-send-email',
-        'am_send_email_html'
+        'am_send_email_main'
     );
 }
 
@@ -37,14 +37,13 @@ function am_add_menu_html() {
     <?php
 }
 
-function am_send_email_html() {
-    ?>
-    <div class="wrap">
-        <p>This is sub menu.</p>
-    </div>
-    <?php
+function am_send_email_main() {
+    if ( $_SERVER["REQUEST_METHOD"] == "GET") {
+        include('includes/send-email.php');
+    }
+    elseif ( $_SERVER["REQUEST_METHOD"] == "POST") {
+        apply_filters('am_change_email_content_data');
+    }
 }
-
-
 
 ?>
