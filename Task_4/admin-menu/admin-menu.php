@@ -61,19 +61,27 @@ function am_send_email_main() {
             $email_contents['recipient'] = trim(htmlspecialchars($_POST['recipient']));
         }
 
+        //  Adding custom filter hook
 
-        apply_filters('am_change_email_content_data', $email_contents);
-        add_filter( 'am_change_email_content_data', 'am_change_email_callback', 10, 1 );
+        $email_contents = apply_filters('am_change_email_content_data', $email_contents);
 
         //  Adding custom action hook
 
         do_action('am_after_email_submit', $email_contents);
         print_r($email_contents);
+
     }
 }
 
 function am_change_email_callback($contents) {
-    true;
+    $contents['subject'] = "This is updated subject";
+    $contents['content'] = "This is updated email content";
+    $contents['recipient'] = "updated@recipient.com";
+    
+    return $contents;
 }
 
+add_filter( 'am_change_email_content_data', 'am_change_email_callback', 10, 1 );
+
 ?>
+
