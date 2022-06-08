@@ -7,6 +7,9 @@
  * Version: 0.0.1
  */
 
+ob_clean();
+ob_start();
+
 function dur_main( $atts = array(), $content = null ) {
     // Checking if user is logged in
     if ( !is_user_logged_in() ) {
