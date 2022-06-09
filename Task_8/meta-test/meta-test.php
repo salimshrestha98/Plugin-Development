@@ -42,4 +42,32 @@ function mt_register_meta_box_callback( $post ) {
     <?php
 }
 
+add_action( 'save_post', 'mt_save_metabox', 10, 2 );
+
+function mt_save_metabox( $post_id, $post ) {
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    $meta_fields = array(
+        'mt_post_author',
+        'mt_post_length',
+        'mt_post_summary'
+    );
+
+    foreach ($meta_fields as $meta_key) {
+
+        if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+            $old_value = get_post_meta( $post->ID, $meta_key, true );
+            $new_value = isset( $_POST[$meta_key] ) ? wp_strip_all_tags( $_POST[$meta_key]) : '';
+
+            if ( $new_value !== $old_value ) {
+                update_post_meta( $post->ID, $meta_key, $new_value );
+            }
+        }
+
+        
+    }
+}
+
 ?>
