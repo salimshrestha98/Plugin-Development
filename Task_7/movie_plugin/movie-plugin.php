@@ -156,6 +156,3 @@ function movie_plugin_setting_dropdown() {
 }
 
 ?>
-
-
- ?>
