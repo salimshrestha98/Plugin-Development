@@ -69,5 +69,4 @@ function mt_save_metabox( $post_id, $post ) {
         
     }
 }
-
 ?>
