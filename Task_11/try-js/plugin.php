@@ -23,4 +23,13 @@ function tj_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'tj_enqueue_scripts' );
 
- ?>
+//  Adding Shortcode
+function tj_user_registration_form_html() {
+    include_once 'inc/tj-user-registration.php';
+}
+add_shortcode(
+    'tj-user-registration-form',
+    'tj_user_registration_form_html'
+);
+
+?>
