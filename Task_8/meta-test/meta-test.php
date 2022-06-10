@@ -55,18 +55,16 @@ function mt_save_metabox( $post_id, $post ) {
         'mt_post_summary'
     );
 
-    foreach ($meta_fields as $meta_key) {
-
-        if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+    if ( $_SERVER["REQUEST_METHOD"] == "POST" ) {
+        foreach ($meta_fields as $meta_key) {
             $old_value = get_post_meta( $post->ID, $meta_key, true );
             $new_value = isset( $_POST[$meta_key] ) ? wp_strip_all_tags( $_POST[$meta_key]) : '';
 
             if ( $new_value !== $old_value ) {
                 update_post_meta( $post->ID, $meta_key, $new_value );
             }
-        }
-
-        
+        }        
     }
 }
+
 ?>
