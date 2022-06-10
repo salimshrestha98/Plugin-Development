@@ -40,4 +40,25 @@ function mrp_register_movie_post_type() {
     register_post_type( 'movie', $args );
 }
 
- ?>
+add_action( 'add_meta_boxes', 'mrp_add_meta_box' );
+
+function mrp_add_meta_box() {
+    add_meta_box(
+        'mrp_meta_box',
+        'Movie Details',
+        'mrp_meta_box_html',
+        'movie',
+        'advanced',
+        'high'
+    );
+}
+
+function mrp_meta_box_html( $post ) {
+    $release_date = get_post_meta( $post->ID, 'mrp_release_date', true);
+    $director = get_post_meta( $post->ID, 'mrp_director', true);
+    $casts = get_post_meta( $post->ID, 'mrp_casts', true);
+
+    include_once 'inc/mrp-metabox-html.php';
+}
+
+?>
