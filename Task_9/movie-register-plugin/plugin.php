@@ -61,4 +61,28 @@ function mrp_meta_box_html( $post ) {
     include_once 'inc/mrp-metabox-html.php';
 }
 
+add_action( 'save_post', 'mrp_save_metabox', 10, 2);
+
+function mrp_save_metabox( $post_id, $post ) {
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    $meta_fields = array(
+        'mrp_release_date',
+        'mrp_director',
+        'mrp_casts'
+    );
+    if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+        foreach ( $meta_fields as $meta_key ) {
+            $old_value = get_post_meta( $post->ID, $meta_key, true );
+            $new_value = isset( $_POST[$meta_key] ) ? wp_strip_all_tags( $_POST[$meta_key] ) : '';
+
+            if ( $new_value !== $old_value ) {
+                update_post_meta( $post->ID, $meta_key, $new_value );
+            }
+        }
+    }
+}
+
 ?>
